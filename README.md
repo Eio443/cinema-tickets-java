@@ -39,3 +39,8 @@ Provide a working implementation of a `TicketService` that:
 - Calculates the correct no of seats to reserve and makes a seat reservation request to the `SeatReservationService`.
 - Rejects any invalid ticket purchase requests. It is up to you to identify what should be deemed as an invalid purchase request.”
 
+## Additional Business Consideration
+Since Infant sits on adult laps:
+- Total Infant tickets cannot be more than adult tickets, for example, an adult cannot lap 15 infants
+- I have added additional validation for infant adult mismatch
+- Usually such validation would require the business to determine
