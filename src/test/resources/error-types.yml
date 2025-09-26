@@ -1,0 +1,19 @@
+errors:
+  - type: THIRD_PARTY_ERROR
+    description: third party unknown errors
+    severity: HIGH
+  - type: ACCOUNT_ID_ERROR
+    description: purchaser account id should be greater than or equal to 1
+    severity: MEDIUM
+  - type: NO_ADULT_ERROR
+    description: ticket request must contain at least an adult ticket
+    severity: MEDIUM
+  - type: ABOVE_MAX_ERROR
+    description: total ticket quantity must not exceed the set maximum per purchase
+    severity: MEDIUM
+  - type: TICKET_REQUEST_ERROR
+    description: the minimum ticket quantity cannot be less than 1 or null
+    severity: MEDIUM
+  - type: INFANT_ADULT_ERROR
+    description: one adult can only have one infant sat on their laps
+    severity: LOW
