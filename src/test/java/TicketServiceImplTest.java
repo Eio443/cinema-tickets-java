@@ -189,7 +189,7 @@ public class TicketServiceImplTest {
                 new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1)
         };
 
-        doThrow(new RuntimeException("Connection error")).when(ticketPaymentService)
+        doThrow(new RuntimeException("TicketPaymentService Connection error")).when(ticketPaymentService)
                 .makePayment(5L, 80);
         InvalidPurchaseException invalidPurchaseException = assertThrows(InvalidPurchaseException.class,
                 () -> ticketService.purchaseTickets(5L, ticketTypeRequests));
@@ -197,4 +197,21 @@ public class TicketServiceImplTest {
         assertEquals(ErrorType.THIRD_PARTY_ERROR.getMessage(), invalidPurchaseException.getErrorType().getMessage());
     }
 
+    @Test
+    @Tag("thirdPartyExceptionTest")
+    void givenAThirdPartyException_whenPurchaseTickets_thenThrowException() {
+        TicketTypeRequest[] ticketTypeRequests = new TicketTypeRequest[] {
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 2),
+                new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 2),
+                new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1)
+        };
+
+        doThrow(new RuntimeException("SeatReservationService Connection error")).when(seatReservationService)
+                .reserveSeat(5L, 4);
+
+        InvalidPurchaseException invalidPurchaseException = assertThrows(InvalidPurchaseException.class,
+                () -> ticketService.purchaseTickets(5L, ticketTypeRequests));
+        assertEquals(ErrorType.THIRD_PARTY_ERROR.name(), invalidPurchaseException.getErrorType().name());
+        assertEquals(ErrorType.THIRD_PARTY_ERROR.getMessage(), invalidPurchaseException.getErrorType().getMessage());
+    }
 }
